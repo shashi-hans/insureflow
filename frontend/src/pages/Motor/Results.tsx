@@ -357,7 +357,9 @@ export default function Results() {
               <div className="flex items-center gap-2 mb-4">
                 <Shield size={15} className="text-teal-500" />
                 <h3 className="font-bold text-sm text-navy-900">Insured Declared Value</h3>
-                <Info size={13} className="text-slate-400 cursor-help" title="Market value of your car used to calculate claims" />
+                <span title="Market value of your car used to calculate claims">
+                  <Info size={13} className="text-slate-400 cursor-help" />
+                </span>
               </div>
               <IDVSlider idv={idv} min={450000} max={850000} onChange={handleIdvChange} />
             </div>
