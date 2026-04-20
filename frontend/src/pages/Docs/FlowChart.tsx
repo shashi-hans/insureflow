@@ -122,7 +122,7 @@ const PRODUCTS: Product[] = [
 ]
 
 // ── Step Card ──────────────────────────────────────────────────────────────
-function StepCard({ step, color, onClick }: { step: FlowStep; color: string; onClick: () => void }) {
+function StepCard({ step, onClick }: { step: FlowStep; onClick: () => void }) {
   const style = TYPE_STYLES[step.type]
   return (
     <button
@@ -168,7 +168,6 @@ function ProductFlow({ product, onStepClick }: { product: Product; onStepClick: 
           <div key={step.id} className="flex items-center">
             <StepCard
               step={step}
-              color={product.textColor}
               onClick={() => step.route && onStepClick(step.route)}
             />
             {i < product.steps.length - 1 && <Arrow color={product.textColor} />}

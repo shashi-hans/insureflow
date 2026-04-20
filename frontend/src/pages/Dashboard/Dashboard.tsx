@@ -6,7 +6,7 @@ import {
   AlertTriangle, XCircle, Download, Eye, X, Calendar,
 } from 'lucide-react'
 import { MOCK_POLICIES, MOCK_CLAIMS } from '../../data/mockData'
-import { formatCurrency, formatDate, getDaysToExpiry } from '../../utils/format'
+import { formatCurrency, formatDate } from '../../utils/format'
 import type { Policy, PolicyStatus } from '../../types'
 
 // ── Helpers ───────────────────────────────────────────────────────────────

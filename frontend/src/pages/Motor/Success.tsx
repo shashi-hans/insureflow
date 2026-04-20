@@ -1,23 +1,25 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import {
-  CheckCircle2, Download, Share2, ShieldCheck, Car, Phone,
+  CheckCircle2, Download, Share2, ShieldCheck, Phone,
   Mail, Calendar, Copy, ArrowRight, Star, Home,
 } from 'lucide-react'
 import type { RootState } from '../../store'
 import { MOCK_PLANS } from '../../data/mockData'
 import { formatCurrency } from '../../utils/format'
 
+const CONFETTI_DOTS = Array.from({ length: 20 }, (_, i) => ({
+  id: i,
+  color: ['bg-teal-400', 'bg-amber-400', 'bg-coral-500', 'bg-mint-400', 'bg-navy-400'][i % 5],
+  left: `${Math.random() * 100}%`,
+  delay: `${Math.random() * 1}s`,
+  size: Math.random() > 0.5 ? 'w-2 h-2' : 'w-3 h-3',
+}))
+
 // ── Confetti dots ─────────────────────────────────────────────────────────
 function Confetti() {
-  const dots = Array.from({ length: 20 }, (_, i) => ({
-    id: i,
-    color: ['bg-teal-400', 'bg-amber-400', 'bg-coral-500', 'bg-mint-400', 'bg-navy-400'][i % 5],
-    left: `${Math.random() * 100}%`,
-    delay: `${Math.random() * 1}s`,
-    size: Math.random() > 0.5 ? 'w-2 h-2' : 'w-3 h-3',
-  }))
+  const dots = CONFETTI_DOTS
 
   return (
     <div className="absolute inset-x-0 top-0 h-40 overflow-hidden pointer-events-none">
@@ -120,7 +122,6 @@ function PolicyCard({ plan, policyNo, ownerName }: {
 
 // ── Main Success Page ─────────────────────────────────────────────────────
 export default function Success() {
-  const navigate = useNavigate()
   const { selectedPlanId, plans, owner } = useSelector((s: RootState) => s.quote)
   const [copied, setCopied] = useState(false)
   const [showShare, setShowShare] = useState(false)
@@ -128,7 +129,9 @@ export default function Success() {
   const allPlans = plans.length > 0 ? plans : MOCK_PLANS
   const plan = allPlans.find(p => p.id === selectedPlanId) ?? allPlans[0]
 
-  const policyNumber = `POL-2026-${plan.insurerSlug.toUpperCase().slice(0, 3)}-${Math.floor(100000 + Math.random() * 900000)}`
+  const [policyNumber] = useState(
+    () => `POL-2026-${plan.insurerSlug.toUpperCase().slice(0, 3)}-${Math.floor(100000 + Math.random() * 900000)}`
+  )
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })

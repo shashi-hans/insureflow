@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import {
-  Car, User, Shield, MapPin, ChevronRight, ChevronLeft,
-  CheckCircle2, Loader2, Phone, Mail, CreditCard, Calendar,
+  Car, User, Shield, ChevronRight, ChevronLeft,
+  CheckCircle2, Loader2, Phone, Mail, CreditCard,
   FileText, AlertCircle,
 } from 'lucide-react'
 import type { RootState } from '../../store'
@@ -288,6 +288,16 @@ function NomineeStep({ onNext, onBack }: { onNext: (d: Record<string, string>) =
   )
 }
 
+// ── Shared review row ─────────────────────────────────────────────────────
+function Row({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex justify-between py-1.5 border-b border-slate-100 last:border-0">
+      <span className="text-xs text-slate-500">{label}</span>
+      <span className="text-xs font-semibold text-navy-900">{value || '—'}</span>
+    </div>
+  )
+}
+
 // ── Step 4: Review & Pay ──────────────────────────────────────────────────
 function ReviewStep({
   vehicle, owner, nominee, plan, onBack, onPay, paying,
@@ -300,12 +310,6 @@ function ReviewStep({
   onPay: () => void
   paying: boolean
 }) {
-  const Row = ({ label, value }: { label: string; value: string }) => (
-    <div className="flex justify-between py-1.5 border-b border-slate-100 last:border-0">
-      <span className="text-xs text-slate-500">{label}</span>
-      <span className="text-xs font-semibold text-navy-900">{value || '—'}</span>
-    </div>
-  )
 
   return (
     <div className="space-y-5">
@@ -413,7 +417,7 @@ function ReviewStep({
 // ── Main Proposal Page ────────────────────────────────────────────────────
 export default function Proposal() {
   const navigate = useNavigate()
-  const { selectedPlanId, plans, vehicle } = useSelector((s: RootState) => s.quote)
+  const { selectedPlanId, plans } = useSelector((s: RootState) => s.quote)
 
   const allPlans = plans.length > 0 ? plans : MOCK_PLANS
   const plan = allPlans.find(p => p.id === selectedPlanId) ?? allPlans[0]
